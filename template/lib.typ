@@ -440,7 +440,8 @@
       }
     },
     footer: context {
-      if utils.is-chapter-page() {
+      if utils.is_main_matter_page() {
+        if utils.is-chapter-page() {
         align(center)[
           #counter(page).display("1")
         ]
@@ -448,6 +449,11 @@
         // no footer
       } else {
         // no footer
+      }
+      } else {
+        align(center)[
+          // #counter(page).display("i")
+        ]
       }
     },
   )
@@ -467,16 +473,21 @@
   // chapters start on a right page and have very big, fancy headings
   show heading.where(level: 1): it => {
     set text(1.3em)
-    pagebreak(to: "odd")
-    v(12%)
-    if it.numbering != none [
-      #align(right, { 
+    // pagebreak(to: "odd")
+    // v(12%)
+    if it.numbering != none {
+      pagebreak(to: "odd")
+      v(12%)
+      align(right, { 
         text(6em, fill: gray, style: "normal", { 
           counter(heading).display()
         })
       })
-      #parbreak()
-    ]
+      parbreak()
+    } else {
+      pagebreak()
+      v(50mm)
+    }
     set text(1.3em)
     v(-4cm)
     align(right)[#text(1cm, weight: "regular")[#it.body]]
@@ -487,7 +498,7 @@
   show heading: i-figured.reset-counters
   show figure: i-figured.show-figure
   show math.equation: i-figured.show-equation
-
+  set page(numbering: "i")
   /*
   // the first section of a chapter starts on the next page
   show heading.where(level: 2): it => {
@@ -498,11 +509,19 @@
   }
   */
 
+  // display statutory declaration
+  set heading(outlined: false)
+  [= #l10n.declaration-title <declaration>]
+  declaration(author, l10n.declaration-text)
+
+
   // the body contains abstracts and then the main matter
 
   body
 
   // back matter
+
+  counter(page).update(1)
 
   // glossary is outlined
   {
@@ -545,11 +564,6 @@
     )
   }
 
-  // display statutory declaration
-  set heading(outlined: true)
-  [= #l10n.declaration-title <declaration>]
-  declaration(author, l10n.declaration-text)
-
 }
 
 /// An abstract section. This should appear twice in the thesis regardless of language; first for
@@ -579,6 +593,8 @@
   outline(title: none)
 
   set heading(outlined: true, numbering: "1.1")
-
+  pagebreak()
+  counter(page).update(0)
+  set page(numbering: "1")
   text(12pt)[#body]
 }

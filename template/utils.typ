@@ -11,6 +11,10 @@
   chapters.any(c => c.location().page() == here().page())
 }
 
+#let is_main_matter_page() = {
+  here().page-numbering() == "1"
+}
+
 // this is an imperfect workaround, see
 // - https://github.com/typst/typst/issues/2722
 // - https://github.com/typst/typst/issues/4438

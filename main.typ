@@ -24,14 +24,18 @@
   bibliography: bibliography("bibliography.bib"),
   language: "en",
 )
-
+// define glossary
 #include "glossaries.typ"
 
+// include abstract
 #include "chapters/abstract.typ"
 
+#todo-outline() // this is only shown if wip_enabled is set to true
+
+// set main matter style
 #show: main-matter()
 
-#todo-outline() // this is only shown if wip_enabled is set to true
+// chapters
 
 #include "chapters/introduction.typ"
 
