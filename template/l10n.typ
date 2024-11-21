@@ -6,6 +6,9 @@
 #let set-database() = _set_database(toml("l10n.toml"))
 
 #let thesis = linguify("thesis")
+#let master-thesis = linguify("master-thesis")
+#let bachelor-thesis = linguify("bachelor-thesis")
+#let dissertation = linguify("dissertation")
 #let supervisor = linguify("supervisor")
 #let performed-in-year = linguify("performed-in-year")
 #let submission-note = linguify("submission-note")

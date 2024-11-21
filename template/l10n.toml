@@ -2,13 +2,15 @@
 default-lang = "en"
 
 [lang.en]
-thesis = "Master's Thesis"
+bachelor-thesis = "Bachelor's Thesis"
+master-thesis = "Master's Thesis"
+dissertation = "Dissertation"
 supervisor = "Supervisor"
 performed-in-year = "Performed in the school year"
 submission-note = "Submission note"
 approved = "Approved"
 
-declaration-title = "Statutory declaration"
+declaration-title = "Affidavid"
 declaration-text= "I herewith declare that I have composed the present thesis myself and without use of any other than the cited sources and aids. Sentences or parts of sentences quoted literally are marked as such; other references with regard to the statement and scope are indicated by full details of the publications concerned. The thesis in the same or similar form has not been submitted to any examination body and has not been published. This thesis was not yet, even in part, used in another examination or as a course performance. Furthermore I declare that the submitted written (bound) copies of the present thesis and the version submitted on a data carrier are consistent with each other in contents."
 
 location-date = "Location, Date"
@@ -29,7 +31,9 @@ list-of-listings = "List of Listings"
 glossary = "Glossary"
 
 [lang.de]
-thesis = "Masterarbeit"
+bachelor-thesis = "Bachelorarbeit"
+master-thesis = "Masterarbeit"
+dissertation = "Dissertation"
 supervisor = "Betreuer"
 performed-in-year = "Ausgeführt im Schuljahr"
 submission-note = "Abgabevermerk"

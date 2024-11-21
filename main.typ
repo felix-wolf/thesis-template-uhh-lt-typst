@@ -5,19 +5,21 @@
 #wip_enabled.update(true)
 
 #show: thesis(
-  title: "Your fance thesis title",
-  author: "Your name",
-  research-group: "Research group",
-  department: "Department",
-  faculty: "Faculty",
-  university: "Univerity",
-  city:  "Location",
-  degree: "Degree", // formal degree name, e.g. Master of Science (M.Sc.)
-  thesis-type: "Master's Thesis", // this is displayed at the top of the front page
-  course-of-study: "Informatics",
-  student-registration-number: 123456,
-  supervisor-label: "Supervisors:", // the German default supervisor label is the non-gendered "Betreuer", so you can override it here
-  supervisors: ("Supervisor 1", "Supervisor 2"),
+  title: "Fancy Thesis Title",
+  subtitle: "Also fancy subtitle",
+  author: "Allan M. Turing",
+  research-group: "Language Technology",
+  department: "Department of Informatics",
+  faculty: "Faculty of Mathematics, Informatics and Natural Sciences",
+  university: "University Hamburg",
+  city:  "Hamburg, Germany",
+  thesis-type: "dissertation", // Must be one of 'bachelors', 'masters' , 'dissertation'
+  field-of-study: "Computer Science",
+  matriculation-number: 08154711,
+  supervisor-label: "Supervisor(s):", // the German default supervisor label is the non-gendered "Betreuer", so you can override it here
+  supervisors: ("John von Neumann, Universität Hamburg",),
+  examiner-label: "Comittee",
+  examiners: ("Prof. Dr. Chris Biemann, Universität Hamburg", "Dr. Konrad Zuse, Universität Hamburg"),
   date: datetime(year: 2055, month: 5, day: 25),
   bibliography: bibliography("bibliography.bib"),
   language: "en",

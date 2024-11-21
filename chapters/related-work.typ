@@ -2,4 +2,4 @@
 
 = Related Work <cha:Related-Work>
 
-This is related work, I can cite with @ghazimatin2024podtile!
+This is related work, I can cite with #ct(<ghazimatin2024podtile>)!

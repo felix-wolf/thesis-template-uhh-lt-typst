@@ -8,6 +8,10 @@
 
 #let _builtin_bibliography = bibliography
 
+#let ct(label) = {
+  cite(label, style: "chicago-author-date")
+}
+
 // helper function to quickly remove parts of the document only meant for development
 #let wip_enabled = state("dir", false)
 
@@ -119,12 +123,13 @@
   department: none,
   university: none,
   city: none,
-  supervisor-label: auto,
+  supervisor-label: none,
   supervisors: (),
-  degree: none,
+  examiner-label: none,
+  examiners: (),
   thesis-type: none,
-  course-of-study: none,
-  student-registration-number: none,
+  field-of-study: none,
+  matriculation-number: none,
   date: none,
   bibliography: none,
   language: "en",
@@ -135,8 +140,33 @@
   import "@preview/hydra:0.5.1": hydra, anchor
   import "@preview/i-figured:0.2.4"
   import "@preview/outrageous:0.3.0"
+  import "@preview/nth:1.0.1"
 
-  
+
+  let t-type = none
+  let degree = none
+  let thesis-label = none
+  if thesis-type == "masters" {
+    t-type = "Masterthesis"
+    degree = "Master of Science (M. Sc.)"
+    thesis-label = l10n.master-thesis
+  } else if thesis-type == "bachelors" {
+    t-type = "Bachelorthesis"
+    degree = "Bachelor of Science (B. Sc.)"
+    thesis-label = l10n.bachelor-thesis
+  } else if thesis-type == "dissertation" {
+    t-type = "Dissertation"
+    degree = "Doctor rerum naturalium (Dr. rer. nat.)"
+    thesis-label = l10n.dissertation
+  } else {
+    panic("thesis-type must be one of bachelors / masters / dissertation")
+  }
+
+  let date-formats = (
+    "en": "Month DD, YYYY",
+    "de": "DD. Month YYYY",
+  )
+
   // basic document & typesetting setup
   set document(
     title: title,
@@ -196,98 +226,181 @@
   // title page
 
   {
-    // header
-    grid(
-      columns: (auto, 1fr, auto),
-      align: center+bottom,
-      assets.uhh_logo(width: 5.5cm),
-      assets.uhh-text(width: 5cm),
-      assets.lt_logo(width: 1cm),
-    )
+    v(-10mm)
+    if thesis-type == "dissertation" {
+        grid(
+        align: center+top,
+        rows: (20%, 21%, 23%, 4%, 27%, 1fr), 
+        columns: (auto),
+        grid(
+          columns: (auto, 1fr, auto),
+          align: center+bottom,
+          assets.uhh_logo(height: 2cm),
+          assets.uhh-text(height: 1.4cm),
+          assets.lt_logo(height: 2cm),
+        ),
+        text(1.44em, font: "TeX Gyre Heros", weight: "extrabold", tracking: 4pt, fill: red)[#upper(t-type)],
+        layout(size => {
+          let w = 0.76 * size.width
+          box(width: w, {
+            text(1.8em, weight: "bold", {title})
+            parbreak()
+            text(1.44em)[#subtitle]
+        })}),
+        
+        text(1.3em, weight: 550, author),
+        text(1.3em, weight: 550, {
+          par(spacing: 8pt, {[
+            // department
+            #research-group
 
-    v(30mm)
+            #department
 
-    // title & subtitle
-    align(center, {
-      text(1.44em, weight: "extrabold", tracking:1pt, fill: red)[#thesis-type]
-      v(35mm)
-      layout(size => {
-        let w = 0.76 * size.width
-        box(width: w)[#text(2.49em, weight: "bold")[#title]]
-      })
+            #faculty
 
-      if subtitle != none {
-        v(-0.7em)
-        text(1.44em)[#subtitle]
-      }
-    })
+            #v(3mm)
+            #university\
+            #city
+          
+            #v(24mm)
+          ]})
+        }),
+        text(1.3em, weight: 550, {
+          // footer
+          par(spacing: 13pt, {[
+            A thesis submitted for the degree of\
 
-    v(30mm)
+            #text(style: "italic", degree)
+          ]})
 
-    // author & institution
-    align(center, {
-      text(1.44em)[#author]
-      v(0.5em)
-      text(1.2em)[#research-group\ #department\ #faculty]
-      v(0.5em)
-      text(1.2em)[#university\ #city]
-    })
+          v(2mm)
 
-    // footer
-    let date-formats = (
-      "en": "Month DD, YYYY",
-      "de": "DD. Month YYYY",
-    )
-    align(center, {
-      v(1fr)
-      text(1.2em)[A thesis submitted for the degree of]
-      parbreak()
-      text(1.2em, style: "italic")[#degree]
-      parbreak()
-      context if text.lang in date-formats {
-        datify.custom-date-format(date, date-formats.at(text.lang))
-      } else {
-        date.display()
-      }
-    })
+          "Printed on "
+          context if text.lang in date-formats {
+            datify.custom-date-format(date, date-formats.at(text.lang))
+          } else {
+            date.display()
+          }
+        })
+      )
     
+    } else {
+      grid(
+        align: center+top,
+        rows: (20%, 13%, 19.5%, 4%, 34.5%, 1fr), 
+        columns: (auto),
+        grid(
+          columns: (auto, 1fr, auto),
+          align: center+bottom,
+          assets.uhh_logo(height: 2cm),
+          assets.uhh-text(height: 1.4cm),
+          assets.lt_logo(height: 2cm),
+        ),
+        text(1.44em, font: "TeX Gyre Heros", weight: "extrabold", tracking: 4pt, fill: red)[#upper(t-type)],
+        layout(size => {
+          let w = 0.76 * size.width
+          box(width: w, {
+            text(1.8em, weight: "bold", {title})
+            parbreak()
+            text(1.44em)[#subtitle]
+        })}),
+        
+        text(1.3em, weight: 550, author),
+        text(1.3em, weight: 550, {
+          par(spacing: 8pt, {[
+          // author & institution
+            Field of Study: #field-of-study\
+            Matriculation No.: #matriculation-number\
+            
+            // supervisors
+            #for (index, value) in examiners.enumerate(start: 1) {
+              [
+                #nth.nths(index) Examiner: #value\
+              ]
+            }
+
+            #v(2mm)
+            // department
+            #research-group
+
+            #department
+
+            #faculty
+
+            #v(3mm)
+            #university\
+            #city
+          
+            #v(24mm)
+          ]})
+        }),
+        text(1.3em, weight: 550, {
+          // footer
+          par(spacing: 13pt, {[
+            A thesis submitted for the degree of\
+
+            #text(style: "italic", degree)
+          ]})
+
+          v(2mm)
+
+          "Printed on "
+          context if text.lang in date-formats {
+            datify.custom-date-format(date, date-formats.at(text.lang))
+          } else {
+            date.display()
+          }
+        })
+      )
+    }
+
     pagebreak()
     
-    // details
-    if subtitle != none {
-      text(font: "TeX Gyre Heros")[#title - #subtitle]
-    } else {
-      text(font: "TeX Gyre Heros")[#title]
-    }
-    
-    parbreak()
-    if course-of-study != none and student-registration-number != none {
-      text(font: "TeX Gyre Heros")[#l10n.thesis submitted by: #author, #course-of-study, #student-registration-number]
-    } else if course-of-study != none {
-      text(font: "TeX Gyre Heros")[#l10n.thesis submitted by: #author, #course-of-study]
-    } else {
-      text(font: "TeX Gyre Heros")[#l10n.thesis submitted by: #author]
-    }
-    
-    v(1em)
-    text(font: "TeX Gyre Heros")[Date of Submission: #datify.custom-date-format(date, "Month DD, YYYY")]
-    v(1em)
-    text(font: "TeX Gyre Heros")[#supervisor-label]
-    v(0em)
-    text(font: "TeX Gyre Heros")[#supervisors.map(author => author).join("\n")]
+    v(6mm)
 
-    v(1fr)
-    
-    text(font: "TeX Gyre Heros")[
-      #university, #city\
-      #faculty\
-      #department]
-      v(1em)
-      text(font: "TeX Gyre Heros")[
-      #research-group
-    ]
-    
-    
+    text(font: "TeX Gyre Heros", weight: 500, {
+      grid(align: left+top,
+      rows: (4%, 4%, 4%, 6%, 1fr, 12%),
+      {
+        if subtitle != none {
+          [#title - #subtitle]
+        } else {
+          title
+        }
+
+      },
+      text(font: "TeX Gyre Heros")[#thesis-label submitted by: #author],
+      [Date of Submission: #datify.custom-date-format(date, "Month DD, YYYY")],
+      {
+        supervisor-label
+        v(-1mm)
+        supervisors.join("\n")
+        
+      },
+      {
+        examiner-label
+        v(0mm)
+        for (index, value) in examiners.enumerate(start: 1) {
+            [
+              #nth.nths(index) Examiner: #value\
+            ]
+        }
+      },
+      {},
+      par(spacing: 6pt, {
+        [#university, #city]
+        parbreak()
+        faculty
+        parbreak()
+        department
+        parbreak()
+        v(3mm)
+        research-group
+      })
+        
+      
+      )
+    }) 
   }
 
   // regular page setup
