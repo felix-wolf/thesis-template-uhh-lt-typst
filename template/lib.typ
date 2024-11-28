@@ -108,6 +108,7 @@
 /// - student-registration-number: Number of student, 'Matrikelnummer'
 /// - date (datetime): The date of submission of the thesis.
 /// - bibliography (content): The bibliography (```typc bibliography()```) to use for the thesis.
+/// - title-width (number): fractial with of title, can be used to force line breaks. Default 1, should be between 0 and 1.
 /// - language (string): The language in which the thesis is written. `"de"` and `"en"` are
 ///   supported. The choice of language influences certain texts on the title page and in headings,
 ///   as well as the date format used on the title page.
@@ -132,6 +133,7 @@
   matriculation-number: none,
   date: none,
   bibliography: none,
+  title-width: 1,
   language: "en",
   paper: "a4",
 ) = body => {
@@ -298,9 +300,9 @@
         ),
         text(1.44em, font: "TeX Gyre Heros", weight: "extrabold", tracking: 4pt, fill: red)[#upper(t-type)],
         layout(size => {
-          let w = 0.76 * size.width
+          let w = title-width * size.width
           box(width: w, {
-            text(1.8em, weight: "bold", {title})
+            text(1.8em, weight: "bold", hyphenate: false, {title})
             parbreak()
             text(1.44em)[#subtitle]
         })}),

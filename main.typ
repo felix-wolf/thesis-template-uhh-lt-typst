@@ -21,6 +21,7 @@
   examiner-label: "Comittee",
   examiners: ("Prof. Dr. Chris Biemann, Universität Hamburg", "Dr. Konrad Zuse, Universität Hamburg"),
   date: datetime(year: 2055, month: 5, day: 25),
+  title-width: 0.6,
   bibliography: bibliography("bibliography.bib"),
   language: "en",
 )
