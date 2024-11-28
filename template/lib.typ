@@ -362,7 +362,7 @@
 
     text(font: "TeX Gyre Heros", weight: 500, {
       grid(align: left+top,
-      rows: (4%, 4%, 4%, 6%, 1fr, 12%),
+      rows: (4%, 4%, 4%, 9%, 1fr, 12%),
       {
         if subtitle != none {
           [#title - #subtitle]
@@ -381,7 +381,7 @@
       },
       {
         examiner-label
-        v(0mm)
+        v(-1mm)
         for (index, value) in examiners.enumerate(start: 1) {
             [
               #nth.nths(index) Examiner: #value\
@@ -595,7 +595,6 @@
   outline(title: none)
 
   set heading(outlined: true, numbering: "1.1")
-  pagebreak()
   counter(page).update(0)
   set page(numbering: "1")
   text(12pt)[#body]
