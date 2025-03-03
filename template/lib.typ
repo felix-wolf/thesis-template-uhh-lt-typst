@@ -55,7 +55,7 @@
 ) = [
 
   #let caption-spacing = -0.2cm
-  
+
   #body
 
   #v(0.2cm)
@@ -137,11 +137,11 @@
   language: "en",
   paper: "a4",
 ) = body => {
-  import "@preview/codly:1.0.0": codly, codly-init
-  import "@preview/datify:0.1.2"
-  import "@preview/hydra:0.5.1": hydra, anchor
+  import "@preview/codly:1.2.0": codly, codly-init
+  import "@preview/datify:0.1.3"
+  import "@preview/hydra:0.6.0": hydra, anchor
   import "@preview/i-figured:0.2.4"
-  import "@preview/outrageous:0.3.0"
+  // import "@preview/outrageous:0.3.0"
   import "@preview/nth:1.0.1"
 
 
@@ -188,8 +188,8 @@
   // make properties accessible as state
 
   // setup linguify
-  l10n.set-database()  
-  
+  l10n.set-database()
+
   // setup glossarium
   show: glossary.make-glossary
 
@@ -199,9 +199,9 @@
 
   // outline style
   set outline(indent: auto, depth: 2)
-  show outline.entry: outrageous.show-entry.with(
-    font: (auto,),
-  )
+  // show outline.entry: outrageous.show-entry.with(
+  //   font: (auto,),
+  // )
 
   // general styles
 
@@ -224,7 +224,7 @@
 
     link(it.target, it.element.body)
   }
-  
+
   // title page
 
   {
@@ -232,7 +232,7 @@
     if thesis-type == "dissertation" {
         grid(
         align: center+top,
-        rows: (20%, 21%, 23%, 4%, 27%, 1fr), 
+        rows: (20%, 21%, 23%, 4%, 27%, 1fr),
         columns: (auto),
         grid(
           columns: (auto, 1fr, auto),
@@ -249,7 +249,7 @@
             parbreak()
             text(1.44em)[#subtitle]
         })}),
-        
+
         text(1.3em, weight: 550, author),
         text(1.3em, weight: 550, {
           par(spacing: 8pt, {[
@@ -285,11 +285,11 @@
           }
         })
       )
-    
+
     } else {
       grid(
         align: center+top,
-        rows: (20%, 13%, 19.5%, 4%, 34.5%, 1fr), 
+        rows: (20%, 13%, 19.5%, 4%, 34.5%, 1fr),
         columns: (auto),
         grid(
           columns: (auto, 1fr, auto),
@@ -306,41 +306,38 @@
             parbreak()
             text(1.44em)[#subtitle]
         })}),
-        
+
         text(1.3em, weight: 550, author),
         text(1.3em, weight: 550, {
           par(spacing: 8pt, {[
           // author & institution
             Field of Study: #field-of-study\
             Matriculation No.: #matriculation-number\
-            
             // supervisors
             #for (index, value) in examiners.enumerate(start: 1) {
               [
                 #nth.nths(index) Examiner: #value\
               ]
             }
-
-            #v(2mm)
+            ]})
+            v(2mm)
+            par(spacing: 8pt, {[
             // department
-            #research-group
-
-            #department
-
+            #research-group\
+            #department\
             #faculty
-
-            #v(3mm)
+            ]})
+            v(3mm)
+            par(spacing: 8pt, {[
             #university\
             #city
-          
-            #v(24mm)
-          ]})
+            ]})
+            v(24mm)
         }),
         text(1.3em, weight: 550, {
           // footer
           par(spacing: 13pt, {[
             A thesis submitted for the degree of\
-
             #text(style: "italic", degree)
           ]})
 
@@ -357,7 +354,7 @@
     }
 
     pagebreak()
-    
+
     v(6mm)
 
     text(font: "TeX Gyre Heros", weight: 500, {
@@ -377,7 +374,7 @@
         supervisor-label
         v(-1mm)
         supervisors.join("\n")
-        
+
       },
       {
         examiner-label
@@ -389,20 +386,17 @@
         }
       },
       {},
-      par(spacing: 6pt, {
-        [#university, #city]
-        parbreak()
-        faculty
-        parbreak()
-        department
-        parbreak()
-        v(3mm)
-        research-group
-      })
-        
-      
+      {par(spacing: 6pt, {[
+        #university, #city\
+        #faculty\
+        #department\
+      ]})
+      v(3mm)
+      par(spacing: 6pt, {[
+        #research-group
+      ]})},
       )
-    }) 
+    })
   }
 
   // regular page setup
@@ -465,7 +459,7 @@
     first-line-indent: 1em,
     spacing: 1em
   )
-  
+
   show: utils.mark-empty-pages()
   // front matter headings are not outlined
   set heading(outlined: false)
@@ -480,8 +474,8 @@
     if it.numbering != none {
       pagebreak(to: "odd")
       v(12%)
-      align(right, { 
-        text(6em, fill: gray, style: "normal", { 
+      align(right, {
+        text(6em, fill: gray, style: "normal", {
           counter(heading).display()
         })
       })
@@ -495,7 +489,7 @@
     align(right)[#text(1cm, weight: "regular")[#it.body]]
     v(0.5cm)
   }
-    
+
   // setup i-figured
   show heading: i-figured.reset-counters
   show figure: i-figured.show-figure
@@ -597,5 +591,6 @@
   set heading(outlined: true, numbering: "1.1")
   counter(page).update(0)
   set page(numbering: "1")
+  show link: set text(fill: blue.darken(60%))
   text(12pt)[#body]
 }
