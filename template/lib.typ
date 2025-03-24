@@ -3,13 +3,14 @@
 #import "glossary.typ"
 #import "utils.typ"
 #import "@preview/big-todo:0.2.0" // todos
+#import "@preview/fletcher:0.5.6" as fletcher: diagram, node, edge
 
 #import glossary: register-glossary, glossary-entry, gls, glspl
 
 #let _builtin_bibliography = bibliography
 
-#let ct(label) = {
-  cite(label, style: "chicago-author-date")
+#let ct(label, form: "normal") = {
+  cite(label, style: "chicago-author-date", form: form)
 }
 
 // helper function to quickly remove parts of the document only meant for development
