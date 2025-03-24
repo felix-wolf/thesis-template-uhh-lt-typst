@@ -7,7 +7,7 @@ This is the introduction! Figures are referenced with \@ref, like @fig:figure_la
 #figure(
   image("../assets/lt-logo.svg"),
   caption: "This is a figure."
-) <figure_label>
+) <fig:figure_label>
 
 == Work-in-progress-content
 

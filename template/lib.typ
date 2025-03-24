@@ -1,9 +1,10 @@
 #import "assets.typ"
+#import "figures.typ"
 #import "l10n.typ"
 #import "glossary.typ"
 #import "utils.typ"
-#import "@preview/big-todo:0.2.0" // todos
-#import "@preview/fletcher:0.5.6" as fletcher: diagram, node, edge
+#import "libs.typ": *
+#import "@preview/linguify:0.4.0": set-database as _set_database, linguify
 
 #import glossary: register-glossary, glossary-entry, gls, glspl
 
@@ -138,13 +139,6 @@
   language: "en",
   paper: "a4",
 ) = body => {
-  import "@preview/codly:1.2.0": codly, codly-init
-  import "@preview/datify:0.1.3"
-  import "@preview/hydra:0.6.0": hydra, anchor
-  import "@preview/i-figured:0.2.4"
-  // import "@preview/outrageous:0.3.0"
-  import "@preview/nth:1.0.1"
-
 
   let t-type = none
   let degree = none
@@ -193,6 +187,9 @@
 
   // setup glossarium
   show: glossary.make-glossary
+
+  // setup per chapter numbering
+  show: figures.custom-numbering()
 
   // setup codly & listing styles
   show: codly-init.with()
@@ -264,7 +261,7 @@
             #v(3mm)
             #university\
             #city
-          
+
             #v(24mm)
           ]})
         }),
@@ -492,19 +489,11 @@
   }
 
   // setup i-figured
-  show heading: i-figured.reset-counters
-  show figure: i-figured.show-figure
-  show math.equation: i-figured.show-equation
+  // show heading: i-figured.reset-counters
+  // show figure: i-figured.show-figure
+  // show math.equation: i-figured.show-equation
+
   set page(numbering: "i")
-  /*
-  // the first section of a chapter starts on the next page
-  show heading.where(level: 2): it => {
-    if utils.is-first-section() {
-      pagebreak()
-    }
-    it
-  }
-  */
 
   // display statutory declaration
   set heading(outlined: false)
@@ -537,29 +526,11 @@
   }
 
   // List of {Figures, Tables, Listings} only shown if there are any such elements
-  context if query(figure.where(kind: image)).len() != 0 {
-    [= #l10n.list-of-figures <list-of-figures>]
-    i-figured.outline(
-      title: none,
-      target-kind: image,
+figures.outlines(
+      figures: [= #l10n.list-of-figures <list-of-figures>],
+      tables: [= #l10n.list-of-tables <list-of-tables>],
+      listings: [= #l10n.list-of-listings <list-of-listings>],
     )
-  }
-
-  context if query(figure.where(kind: table)).len() != 0 {
-    [= #l10n.list-of-tables <list-of-tables>]
-    i-figured.outline(
-      title: none,
-      target-kind: table,
-    )
-  }
-
-  context if query(figure.where(kind: raw)).len() != 0 {
-    [= #l10n.list-of-listings <list-of-listings>]
-    i-figured.outline(
-      title: none,
-      target-kind: raw,
-    )
-  }
 
 }
 
