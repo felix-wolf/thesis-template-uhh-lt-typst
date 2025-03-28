@@ -1,4 +1,4 @@
-#import "@preview/glossarium:0.5.0" as glossarium: make-glossary, gls, agls, glspl
+#import "@preview/glossarium:0.5.4" as glossarium: make-glossary, gls, agls, glspl
 
 #let _glossary_entries = state("thesis-glossary-entries")
 
@@ -27,7 +27,7 @@
   key,
   short: none,
   long: none,
-  desc: none,
+  description: none,
   plural: none,
   longplural: none,
   group: none,
@@ -38,7 +38,7 @@
     key: key,
     short: short,
     long: long,
-    desc: desc,
+    description: description,
     plural: plural,
     longplural: longplural,
     group: group,
@@ -71,6 +71,5 @@
   if any-references or args.named().at("show-all", default: false) {
     title
   }
-
   glossarium.print-glossary(entries, ..args)
 }
