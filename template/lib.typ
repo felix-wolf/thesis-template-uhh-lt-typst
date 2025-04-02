@@ -522,7 +522,7 @@
 
   // bibliography is outlined, and we use our own header for the label
   {
-    set _builtin_bibliography(title: none)
+    set _builtin_bibliography(title: none, style: "chicago-author-date")
     set heading(outlined: true)
 
     [= #l10n.bibliography <bibliography>]
