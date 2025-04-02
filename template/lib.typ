@@ -405,6 +405,10 @@
     header-ascent: 35%,
     footer-descent: 15%,
     header: context {
+      // per page footnote numbering
+      counter(footnote).update(0)
+
+      // configure header
       if utils.is-chapter-page() {
         // no header
       } else if utils.is-empty-page() {
