@@ -188,8 +188,7 @@
   // setup glossarium
   show: glossary.make-glossary
 
-  // setup per chapter numbering
-  show: figures.custom-numbering()
+
 
   // setup codly & listing styles
   show: codly-init.with()
@@ -492,10 +491,8 @@
     v(0.5cm)
   }
 
-  // setup i-figured
-  // show heading: i-figured.reset-counters
-  // show figure: i-figured.show-figure
-  // show math.equation: i-figured.show-equation
+  // setup per chapter numbering
+  show: figures.custom-numbering()
 
   set page(numbering: "i")
 
