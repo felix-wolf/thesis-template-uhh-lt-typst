@@ -18,7 +18,7 @@
 
   set math.equation(numbering: n => {
     let ch = counter(heading).get().first()
-    std.numbering("(1.1)", ch, n)
+    std.numbering("1.1", ch, n)
   })
   body
 }
