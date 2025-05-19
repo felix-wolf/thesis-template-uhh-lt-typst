@@ -1,4 +1,4 @@
-#import "@preview/glossarium:0.5.4" as glossarium: make-glossary, gls, agls, glspl
+#import "@preview/glossarium:0.5.6" as glossarium: make-glossary, gls, agls, glspl
 
 #let _glossary_entries = state("thesis-glossary-entries")
 
