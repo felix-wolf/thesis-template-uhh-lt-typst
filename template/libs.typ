@@ -1,4 +1,4 @@
-#import "@preview/fletcher:0.5.6" as fletcher: diagram, node, edge
+#import "@preview/fletcher:0.5.7" as fletcher: diagram, node, edge
 #import "@preview/big-todo:0.2.0"
 #import "@preview/codly:1.3.0": codly, codly-init
 #import "@preview/datify:0.1.3"
