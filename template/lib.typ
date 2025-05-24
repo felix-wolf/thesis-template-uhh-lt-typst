@@ -429,7 +429,7 @@
                 }
                 text(style: "italic")[#candidate.body]
               },
-              text(style: "italic")[#counter(page).display("1", both: false)],
+              text(style: "italic")[#counter(page).display(page.numbering, both: false)],
             )
           },
         )
@@ -439,17 +439,17 @@
     footer: context {
       if utils.is_main_matter_page() {
         if utils.is-chapter-page() {
-        align(center)[
-          #counter(page).display("1")
-        ]
-      } else if utils.is-empty-page() {
-        // no footer
+          align(center)[
+            #counter(page).display("1")
+          ]
+        } else if utils.is-empty-page() {
+          // no footer
+        } else {
+          // no footer
+        }
       } else {
-        // no footer
-      }
-      } else {
         align(center)[
-          // #counter(page).display("i")
+          #counter(page).display(page.numbering)
         ]
       }
     },
