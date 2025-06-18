@@ -138,6 +138,7 @@
   title-width: 1,
   language: "en",
   paper: "a4",
+  outline_figures: true,
 ) = body => {
 
   let t-type = none
@@ -187,8 +188,6 @@
 
   // setup glossarium
   show: glossary.make-glossary
-
-
 
   // setup codly & listing styles
   show: codly-init.with()
@@ -448,9 +447,11 @@
           // no footer
         }
       } else {
-        align(center)[
-          #counter(page).display(page.numbering)
-        ]
+        if counter(page).display() != "n" {
+          align(center)[
+            #counter(page).display(page.numbering)
+          ]
+        }
       }
     },
   )
@@ -486,7 +487,7 @@
       v(50mm)
     }
     set text(1.3em)
-    v(-4cm)
+    v(-40mm)
     align(right)[#text(1cm, weight: "regular")[#it.body]]
     v(0.5cm)
   }
@@ -508,7 +509,39 @@
 
   // back matter
 
-  counter(page).update(1)
+  counter(page).update(7)
+
+  set heading(outlined: true)
+
+  bibliographyx(
+    "bibliography.bib",
+    title: "Bibliography - Science",
+    prefix: "sci-",
+    style: "chicago-author-date"
+  )
+
+  bibliographyx(
+    "bibliography.bib",
+    title: "Bibliography - Websites",
+    prefix: "web-",
+    style: "chicago-author-date"
+  )
+
+  bibliographyx(
+    "bibliography.bib",
+    title: "Bibliography - Statistics",
+    prefix: "stat-",
+    style: "chicago-author-date"
+  )
+
+  // bibliography is outlined, and we use our own header for the label
+  // {
+    // set _builtin_bibliography(title: none, style: "chicago-author-date")
+  //   set heading(outlined: true)
+
+  //   [= #l10n.bibliography <bibliography>]
+    // bibliography
+  // }
 
   // glossary is outlined
   {
@@ -517,22 +550,14 @@
     glossary.print-glossary(title: [= #l10n.glossary <glossary>])
   }
 
-  // bibliography is outlined, and we use our own header for the label
-  {
-    set _builtin_bibliography(title: none, style: "chicago-author-date")
-    set heading(outlined: true)
-
-    [= #l10n.bibliography <bibliography>]
-    bibliography
-  }
-
   // List of {Figures, Tables, Listings} only shown if there are any such elements
-figures.outlines(
-      figures: [= #l10n.list-of-figures <list-of-figures>],
-      tables: [= #l10n.list-of-tables <list-of-tables>],
-      listings: [= #l10n.list-of-listings <list-of-listings>],
-    )
-
+  if outline_figures {
+    figures.outlines(
+          figures: [= #l10n.list-of-figures <list-of-figures>],
+          tables: [= #l10n.list-of-tables <list-of-tables>],
+          listings: [= #l10n.list-of-listings <list-of-listings>],
+        )
+  }
 }
 
 /// An abstract section. This should appear twice in the thesis regardless of language; first for

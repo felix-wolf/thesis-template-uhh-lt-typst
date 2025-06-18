@@ -7,3 +7,4 @@
 #import "@preview/outrageous:0.4.0"
 #import "@preview/linguify:0.4.2": set-database as _set_database, linguify
 #import "@preview/cetz:0.3.4"
+#import "@preview/alexandria:0.2.0": *
