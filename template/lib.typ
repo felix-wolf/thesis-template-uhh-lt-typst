@@ -474,7 +474,8 @@
     // pagebreak(to: "odd")
     // v(12%)
     if it.numbering != none {
-      pagebreak(to: "odd")
+      //pagebreak(to: "odd")
+      pagebreak()
       v(12%)
       align(right, {
         text(6em, fill: gray, style: "normal", {
