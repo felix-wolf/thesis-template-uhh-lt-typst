@@ -53,6 +53,7 @@
 #let declaration(
   author-name,
   signature-height: 1.1cm,
+  custom_location_date_string: none,
   body,
 ) = [
 
@@ -72,7 +73,11 @@
         #v(signature-height)
         #line(length: 80%)
         #v(caption-spacing)
-        #l10n.location-date
+        #if custom_location_date_string != none {
+          custom_location_date_string
+        } else {
+          l10n.location-date
+        }
       ],
       [
         #v(signature-height)
@@ -291,8 +296,8 @@
           columns: (auto, 1fr, auto),
           align: center+bottom,
           assets.uhh_logo(height: 2cm),
-          assets.uhh-text(height: 1.4cm),
-          assets.lt_logo(height: 2cm),
+          // assets.uhh-text(height: 1.4cm),
+          // assets.lt_logo(height: 2cm),
         ),
         text(1.44em, font: "TeX Gyre Heros", weight: "extrabold", tracking: 4pt, fill: red)[#upper(t-type)],
         layout(size => {
@@ -315,20 +320,20 @@
                 #nth.nths(index) Examiner: #value\
               ]
             }
-            ]})
-            v(2mm)
-            par(spacing: 8pt, {[
+          ]})
+          v(3mm)
+          par(spacing: 8pt, {[
             // department
             #research-group\
             #department\
             #faculty
-            ]})
-            v(3mm)
-            par(spacing: 8pt, {[
+          ]})
+          v(3mm)
+          par(spacing: 8pt, {[
             #university\
             #city
-            ]})
-            v(24mm)
+          ]})
+          v(24mm)
         }),
         text(1.3em, weight: 550, {
           // footer
@@ -339,7 +344,7 @@
 
           v(2mm)
 
-          "Printed on "
+          "Submitted on "
           context if text.lang in date-formats {
             datify.custom-date-format(date, date-formats.at(text.lang))
           } else {
@@ -499,9 +504,9 @@
   set page(numbering: "i")
 
   // display statutory declaration
-  set heading(outlined: false)
-  [= #l10n.declaration-title <declaration>]
-  declaration(author, l10n.declaration-text)
+  // set heading(outlined: false)
+  // [= #l10n.declaration-title <declaration>]
+  // declaration(author, l10n.declaration-text)
 
 
   // the body contains abstracts and then the main matter
@@ -510,7 +515,7 @@
 
   // back matter
 
-  counter(page).update(7)
+  counter(page).update(6)
 
   set heading(outlined: true)
 
